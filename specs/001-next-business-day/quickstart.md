@@ -32,6 +32,9 @@ curl "http://localhost:8080/api/business-days/next?date=2026-05-22"
 
 Expected outcome: a response containing `2026-05-26` when the following Monday is marked as a holiday.
 
+The default configured calendar includes `2026-05-25` as a public holiday in
+`src/main/java/com/example/demo/service/ConfiguredHolidayCalendar.java`.
+
 ## Validate invalid input scenarios
 
 ```bash
@@ -46,3 +49,4 @@ Expected outcome: HTTP 400 with a message describing the expected `yyyy-MM-dd` f
 - Holiday-adjacent scenarios continue to the next valid working day.
 - Invalid or empty dates fail fast with HTTP 400.
 - Result payloads use ISO-formatted dates and are consistent for external consumers.
+- The Gradle quality gate passes with `gradlew.bat test`.
