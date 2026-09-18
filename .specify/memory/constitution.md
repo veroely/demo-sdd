@@ -1,50 +1,40 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+- Version change: 0.0.0 -> 1.0.0
+- Modified principles: [PRINCIPLE_1_NAME] -> User Value & Clarity; [PRINCIPLE_2_NAME] -> Simplicity & Maintainability; [PRINCIPLE_3_NAME] -> Test-First Delivery; [PRINCIPLE_4_NAME] -> Quality Gates & Safe Change; [PRINCIPLE_5_NAME] -> Observability & Operational Readiness
+- Added sections: Delivery Standards; Review Workflow
+- Removed sections: none
+- Deferred items: TODO(RATIFICATION_DATE): original adoption date is not recorded in the repository context.
+-->
+
+# Demo Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. User Value & Clarity
+Every feature, change, and decision in this project must start from a concrete user or operational need. The team must define the problem, the accepted behavior, and the measurable outcome before implementation. This keeps the codebase aligned with the real product goal and prevents scope drift and unnecessary work.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Simplicity & Maintainability
+The project must favor the simplest solution that satisfies the requirement and preserves readability. We do not add unnecessary framework complexity, duplicated logic, or hidden state. Code must be easy to understand, change, and verify by the next maintainer.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Test-First Delivery
+All behavior-changing work must be covered by a failing test or equivalent proof before code is accepted. The implementation must then satisfy that test, and any refactor must keep the evidence green. This preserves correctness and prevents regressions.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Quality Gates & Safe Change
+No code may be merged without passing the required checks for build, test, and static quality. Changes must be small, reviewable, and reversible; risky edits require explicit validation and documentation. The team must treat correctness and reliability as non-negotiable.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Observability & Operational Readiness
+The application must emit enough signals to diagnose failures, measure usage, and validate deployments. Logs, metrics, and error handling must be clear, actionable, and aligned with runtime behavior. If a change cannot be observed or explained, it is not ready.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Delivery Standards
+This project must remain aligned with the Spring Boot demo structure: preserve a clear package layout, avoid broad rewrites without a documented reason, and keep configuration explicit and reviewable. New dependencies, features, and infrastructure changes require a justification tied to required behavior, maintenance cost, and operational risk.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Review Workflow
+All changes must be reviewed before merge. Reviewers must check conformance to this constitution, whether the change is minimal and testable, and whether the risk and rollout plan are sufficiently documented. Pull requests must include the affected behavior, validation evidence, and any follow-up concerns.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution supersedes informal practices and local exceptions when they conflict with it. Amendments require a documented rationale, an impact assessment, and approval from the project maintainer or designated reviewers before the change is adopted. Any amendment that changes required behavior or enforcement must include a migration note for current contributors.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+The project will track compliance by requiring validation evidence in review and by revisiting governance terms when the application architecture changes materially. Changes that introduce new requirements or remove existing ones must update this document and the associated implementation guidance in the same change set.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE): original adoption date is not recorded in the repository context. | **Last Amended**: 2026-09-18
