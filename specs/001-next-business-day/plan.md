@@ -1,113 +1,81 @@
-# Implementation Plan: [FEATURE]
+# Implementation Plan: Next Business Day
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
+**Branch**: `001-next-business-day` | **Date**: 2026-09-18 | **Spec**: [spec.md](./spec.md)
 
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
-
-**Note**: This template is filled in by the `/speckit-plan` command; its definition describes the execution workflow.
+**Input**: Feature specification from [spec.md](./spec.md)
 
 ## Summary
 
-[Extract from feature spec: primary requirement + technical approach from research]
+This feature adds a backend capability to calculate the next valid business day from a supplied date. The implementation excludes weekends and configured public holidays, then validates malformed or missing input before any calculation is attempted.
+
+The solution fits the existing Spring Boot repository by keeping the logic in a small service/controller boundary with explicit validation and clear response contracts. It follows the project constitution by favoring a simple design, clear test coverage, and observable behavior for operational callers.
 
 ## Technical Context
 
-<!--
-  ACTION REQUIRED: Replace the content in this section with the technical details
-  for the project. The structure here is presented in advisory capacity to guide
-  the iteration process.
--->
+**Language/Version**: Java 17 with the existing Spring Boot project structure
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]
+**Primary Dependencies**: Spring Boot, Spring Web, Java Time (`LocalDate`, `DayOfWeek`), JUnit 5
 
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]
+**Storage**: No persistent storage is required for v1; holiday data comes from the configured holiday calendar source or static business rules
 
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
+**Testing**: JUnit 5, Spring Boot test slices, service-level and controller-level validation tests
 
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]
+**Target Platform**: Backend service/API integration layer
 
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
+**Project Type**: web-service
 
-**Project Type**: [e.g., library/cli/web-service/mobile-app/compiler/desktop-app or NEEDS CLARIFICATION]
+**Performance Goals**: Single-date business-day lookup completes in under 100 ms in a local service environment
 
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]
+**Constraints**: Dates must be provided in ISO format; weekends and configured holidays are always non-working days; no timezone ambiguity in v1
 
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]
-
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Scale/Scope**: Supports integrated consumer workflows and operational scheduling; not a full scheduler engine or multi-service platform
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- Passes User Value & Clarity: the feature directly supports operational scheduling and avoids manual calendar checks.
+- Passes Simplicity & Maintainability: a single service + controller boundary is sufficient for the requirement.
+- Passes Test-First Delivery: the acceptance criteria can be converted into failing tests before implementation.
+- Passes Quality Gates & Safe Change: the change is small, reviewable, and backed by validation evidence.
+- Passes Observability & Operational Readiness: the API returns predictable success and validation-failure responses.
 
 ## Project Structure
 
 ### Documentation (this feature)
 
 ```text
-specs/[###-feature]/
-├── plan.md              # This file (/speckit-plan command output)
-├── research.md          # Phase 0 output (/speckit-plan command)
-├── data-model.md        # Phase 1 output (/speckit-plan command)
-├── quickstart.md        # Phase 1 output (/speckit-plan command)
-├── contracts/           # Phase 1 output (/speckit-plan command)
-└── tasks.md             # Phase 2 output (/speckit-tasks command - NOT created by /speckit-plan)
+specs/001-next-business-day/
+├── plan.md              # This file
+├── research.md          # Phase 0 output
+├── data-model.md        # Phase 1 output
+├── quickstart.md        # Phase 1 output
+├── contracts/           # Phase 1 output
+├── spec.md              # Feature specification
+└── tasks.md             # Task list for implementation
 ```
 
 ### Source Code (repository root)
-<!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
--->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
 src/
-├── models/
-├── services/
-├── cli/
-└── lib/
-
-tests/
-├── contract/
-├── integration/
-└── unit/
-
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+├── main/
+│   ├── java/
+│   │   └── com/example/demo/
+│   │       ├── controller/
+│   │       ├── service/
+│   │       ├── model/
+│   │       └── validation/
+│   └── resources/
+│       └── application.properties
+└── test/
+    └── java/com/example/demo/
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+**Structure Decision**: A single Spring Boot backend service is sufficient for this feature and matches the repository structure. No separate module or multi-project layout is needed for v1.
 
 ## Complexity Tracking
 
 > **Fill ONLY if Constitution Check has violations that must be justified**
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+No constitution violations require special justification for this feature.
